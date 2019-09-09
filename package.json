@@ -9,7 +9,7 @@
     "client": "cd client && yarn start",
     "client-install": "cd client && yarn install",
     "dev": "concurrently \"yarn run server\" \"yarn run client\"",
-    "heroku-postbuild": "cd client && yarn && yarn run build"
+    "heroku-postbuild": "yarn && cd client && yarn && yarn run build"
   },
   "dependencies": {
     "@hapi/joi": "^15.1.1",
@@ -18,9 +18,7 @@
     "http-errors": "^1.7.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.12",
-    "swagger-ui-express": "^4.0.7"
-  },
-  "devDependencies": {
+    "swagger-ui-express": "^4.0.7",
     "morgan": "^1.9.1"
   }
 }

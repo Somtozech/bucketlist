@@ -5,14 +5,16 @@ Bucket List API
 ## To install npm packages:
 
 ```
-yarn
+yarn 
+yarn run client-install
 ```
 
-## Start server by running:
+## Start the client and server by running:
 
 ```
-yarn start
+yarn run dev
 ```
+
 
 ## To Open up documentation
 

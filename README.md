@@ -2,6 +2,10 @@
 
 Bucket List API
 
+
+## To view live demo 
+[click link to view demo](https://bucketlistery.herokuapp.com/)
+
 ## To install npm packages:
 
 ```

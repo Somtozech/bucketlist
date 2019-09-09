@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "This is the bucket list Api docs. To use this api you have to first signup. This creates a new user. Then login in with the email and password. This returns a token as response. This token enables you to access private routes and expires in 1 hour. Token could be placed in the authorization header ie `{ Authorization : \"Bearer token\" }` header or in the request body(token field) or query ie `baseurl/private_route?token=token` ",
+    "description": "This is the bucket list Api docs. You have to login to get a token. The token enables you to access private routes and expires in 1 hour. Token could be placed in the authorization header ie `{ Authorization : \"Bearer token\" }` header or in the request body(token field) or query ie `baseurl/private_route?token=token` ",
     "version": "1.0.0",
     "title": "Bucket List Api",
     "contact": {
@@ -23,24 +23,15 @@
       "description": "Different actions for the bucket list"
     }
   ],
-  "schemes": [
-    "http"
-  ],
+  "schemes": ["http"],
   "paths": {
     "/auth/signup": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Creates a new user",
         "description": "",
-        "consumes": [
-          "application/json",
-          "application/x-www-form-urlencoded"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "body",
@@ -67,18 +58,11 @@
     },
     "/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Logs user into the system",
         "description": "",
-        "consumes": [
-          "application/json",
-          "application/x-www-form-urlencoded"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "body",
@@ -108,18 +92,11 @@
     },
     "/auth/logout": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Logs a user out",
         "description": "",
-        "consumes": [
-          "application/json",
-          "application/x-www-form-urlencoded"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "User logged out"
@@ -132,14 +109,10 @@
     },
     "/bucketlists": {
       "get": {
-        "tags": [
-          "Bucket List"
-        ],
+        "tags": ["Bucket List"],
         "summary": "List all the created bucket lists",
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "A JSON array of the bucket lists",
@@ -156,18 +129,11 @@
         }
       },
       "post": {
-        "tags": [
-          "Bucket List"
-        ],
+        "tags": ["Bucket List"],
         "summary": "Create a new bucket list",
         "description": "",
-        "consumes": [
-          "application/json",
-          "application/x-www-form-urlencoded"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "body",
@@ -197,14 +163,10 @@
     },
     "/bucketlists/{id}": {
       "get": {
-        "tags": [
-          "Bucket List"
-        ],
+        "tags": ["Bucket List"],
         "summary": "Get single bucket list",
         "description": "Returns a single bucket list",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -230,14 +192,10 @@
         }
       },
       "put": {
-        "tags": [
-          "Bucket List"
-        ],
+        "tags": ["Bucket List"],
         "summary": "Update this bucket list",
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -263,14 +221,10 @@
         }
       },
       "delete": {
-        "tags": [
-          "Bucket List"
-        ],
+        "tags": ["Bucket List"],
         "summary": "Delete this bucket list",
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -289,14 +243,10 @@
     },
     "/bucketlists/{id}/items": {
       "get": {
-        "tags": [
-          "Bucket List"
-        ],
+        "tags": ["Bucket List"],
         "summary": "List all the created items in a bucket list",
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -322,14 +272,10 @@
         }
       },
       "post": {
-        "tags": [
-          "Bucket List"
-        ],
+        "tags": ["Bucket List"],
         "summary": "Create a new item in bucket list",
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -357,14 +303,10 @@
     },
     "/bucketlists/{id}/items/{item_id}": {
       "get": {
-        "tags": [
-          "Bucket List"
-        ],
+        "tags": ["Bucket List"],
         "summary": "Get a single item in a bucket list",
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -397,14 +339,10 @@
         }
       },
       "put": {
-        "tags": [
-          "Bucket List"
-        ],
+        "tags": ["Bucket List"],
         "summary": "Update a bucket list item",
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -437,14 +375,10 @@
         }
       },
       "delete": {
-        "tags": [
-          "Bucket List"
-        ],
+        "tags": ["Bucket List"],
         "summary": "Delete an item in a bucket list",
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",

@@ -1,0 +1,610 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the bucket list Api docs. To use this api you have to first signup. This creates a new user. Then login in with the email and password. This returns a token as response. This token enables you to access private routes and expires in 1 hour. Token could be placed in the authorization header ie `{ Authorization : \"Bearer token\" }` header or in the request body(token field) or query ie `baseurl/private_route?token=token` ",
+    "version": "1.0.0",
+    "title": "Bucket List Api",
+    "contact": {
+      "email": "ezechinnaemeka@gmail.com"
+    },
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "User signup, authentication and login"
+    },
+    {
+      "name": "Bucket List",
+      "description": "Different actions for the bucket list"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Creates a new user",
+        "description": "",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "body for creating user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "409": {
+            "description": "User email is already in use"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logs user into the system",
+        "description": "",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Body for login",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Invalid email or password"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logs a user out",
+        "description": "",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged out"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/bucketlists": {
+      "get": {
+        "tags": [
+          "Bucket List"
+        ],
+        "summary": "List all the created bucket lists",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON array of the bucket lists",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BucketLists"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Bucket List"
+        ],
+        "summary": "Create a new bucket list",
+        "description": "",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Bucket List model",
+            "schema": {
+              "$ref": "#/definitions/BucketListFromRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A bucket list",
+            "schema": {
+              "$ref": "#/definitions/BucketList"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/bucketlists/{id}": {
+      "get": {
+        "tags": [
+          "Bucket List"
+        ],
+        "summary": "Get single bucket list",
+        "description": "Returns a single bucket list",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of bucket list to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A bucket list",
+            "schema": {
+              "$ref": "#/definitions/BucketList"
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "description": "Bucket List not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Bucket List"
+        ],
+        "summary": "Update this bucket list",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of bucket list to update",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated Bucket List",
+            "schema": {
+              "$ref": "#/definitions/BucketList"
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "description": "Bucket List not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Bucket List"
+        ],
+        "summary": "Delete this bucket list",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of bucket list to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bucket List was deleted"
+          }
+        }
+      }
+    },
+    "/bucketlists/{id}/items": {
+      "get": {
+        "tags": [
+          "Bucket List"
+        ],
+        "summary": "List all the created items in a bucket list",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of bucket list to get items",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Items in bucket list",
+            "schema": {
+              "$ref": "#/definitions/BucketListItems"
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "description": "Bucket List not found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Bucket List"
+        ],
+        "summary": "Create a new item in bucket list",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of bucket list to create new item in",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "updated list of items in bucket list",
+            "schema": {
+              "$ref": "#/definitions/BucketListItems"
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "description": "Bucket List not found"
+          }
+        }
+      }
+    },
+    "/bucketlists/{id}/items/{item_id}": {
+      "get": {
+        "tags": [
+          "Bucket List"
+        ],
+        "summary": "Get a single item in a bucket list",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of bucket list",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item_id",
+            "in": "path",
+            "description": "ID of item in bucket list",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON array of single item found in bucket list",
+            "schema": {
+              "$ref": "#/definitions/BucketListItems"
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "description": "Item not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Bucket List"
+        ],
+        "summary": "Update a bucket list item",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of bucket list",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item_id",
+            "in": "path",
+            "description": "ID of item in bucket list",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON array of the updated items in bucket list",
+            "schema": {
+              "$ref": "#/definitions/BucketListItems"
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "description": "Item not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Bucket List"
+        ],
+        "summary": "Delete an item in a bucket list",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of bucket list",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item_id",
+            "in": "path",
+            "description": "ID of item in bucket list",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item deleted from bucket list"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "BucketLists": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "done": {
+                "type": "boolean"
+              },
+              "date_created": {
+                "type": "string"
+              },
+              "date_modified": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "date_created": {
+          "type": "string"
+        },
+        "date_modified": {
+          "type": "string"
+        },
+        "created_by": {
+          "type": "string"
+        }
+      }
+    },
+    "BucketList": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "date_created": {
+          "type": "string"
+        },
+        "date_modified": {
+          "type": "string"
+        },
+        "created_by": {
+          "type": "string"
+        }
+      }
+    },
+    "BucketListItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "done": {
+            "type": "boolean"
+          },
+          "date_created": {
+            "type": "string"
+          },
+          "date_modified": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "BucketListFromRequestBody": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Access token is missing or invalid"
+      }
+    }
+  }
+}

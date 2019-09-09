@@ -26,7 +26,7 @@ class Validation {
     next();
   }
 
-  checkBucketListIsValid = (req, res, next) => {
+  checkBucketListIsValid(req, res, next) {
     const schema = Joi.object().keys({
       name: Joi.string()
         .min(1)
@@ -47,7 +47,7 @@ class Validation {
     }
 
     next();
-  };
+  }
 }
 
 module.exports = new Validation();

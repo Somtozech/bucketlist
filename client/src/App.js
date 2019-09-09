@@ -16,15 +16,6 @@ class App extends Component {
     error: false
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.isLoggedIn !== this.state.isLoggedIn) {
-      this.getBucketLists();
-    }
-    // console.log(this.getBucketLists);
-    // const { isLoggedIn } = this.state;
-    // if (isLoggedIn === true) this.getBucketLists();
-  }
-
   componentDidMount() {
     this.getBucketLists();
   }
@@ -33,7 +24,7 @@ class App extends Component {
     this.setState({ error: true, loading: false });
     setTimeout(() => {
       this.setState({ error: false });
-    }, 700);
+    }, 1000);
   }
 
   getBucketLists() {
@@ -101,7 +92,7 @@ class App extends Component {
   };
 
   handleLogin = () => {
-    this.setState({ isLoggedIn: true });
+    this.getBucketLists();
   };
 
   render() {

@@ -7,7 +7,6 @@ class Client {
     this.useLocalStorage = typeof localStorage !== 'undefined';
     if (this.useLocalStorage) {
       this.token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
-      this.authorization = `Bearer ${this.token}`;
     }
   }
 
@@ -27,13 +26,13 @@ class Client {
     }
   }
 
-  search(query, cb) {
+  search(query) {
     const url = `/api/v1/bucketlists/?q=${query}`;
     return fetch(url, {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: this.authorization
+        Authorization: `Bearer ${this.token}`
       }
     })
       .then(this.checkStatus)
@@ -46,7 +45,7 @@ class Client {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: this.authorization
+        Authorization: `Bearer ${this.token}`
       },
       body: JSON.stringify(body)
     })
@@ -60,7 +59,7 @@ class Client {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: this.authorization
+        Authorization: `Bearer ${this.token}`
       }
     })
       .then(this.checkStatus)
@@ -73,7 +72,7 @@ class Client {
       method: 'delete',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: this.authorization
+        Authorization: `Bearer ${this.token}`
       }
     })
       .then(this.checkStatus)
@@ -86,7 +85,7 @@ class Client {
       method: 'put',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: this.authorization
+        Authorization: `Bearer ${this.token}`
       },
       body: JSON.stringify({ name: item.name })
     })
@@ -96,6 +95,19 @@ class Client {
 
   login = body => {
     return fetch('/api/v1/auth/login', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+      .then(this.checkStatus)
+      .then(this.parseJSON)
+      .then(json => this.setToken(json.token));
+  };
+
+  signup = body => {
+    return fetch('/api/v1/auth/signup', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -117,7 +129,7 @@ class Client {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: this.authorization
+        Authorization: `Bearer ${this.token}`
       }
     });
   }

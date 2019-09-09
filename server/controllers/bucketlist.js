@@ -41,6 +41,8 @@ class BucketList {
         };
       }
 
+      filter.created_by = req.user.id;
+
       const bucketLists = await bucketListModel
         .find(filter)
         .select('name items date_created date_modified created_by')
@@ -58,7 +60,7 @@ class BucketList {
     try {
       const { id } = req.params;
       const bucketList = await bucketListModel
-        .findOne({ _id: id })
+        .findOne({ _id: id, created_by: req.user.id })
         .select('name items date_created date_modified created_by');
       if (!bucketList) {
         return res.status(404).send({
@@ -91,7 +93,6 @@ class BucketList {
         .findOneAndUpdate({ _id: id }, { $set: filter }, { new: true })
         .select('name items date_created date_modified created_by');
 
-      console.log(bucketList);
       if (!bucketList) {
         return res.status(404).send({
           status: 'Not Found',
@@ -143,7 +144,7 @@ class BucketList {
     try {
       const { id } = req.params;
       const bucketList = await bucketListModel
-        .findOne({ _id: id })
+        .findOne({ _id: id, created_by: req.user.id })
         .select('items');
       if (!bucketList) {
         return res.status(404).send({

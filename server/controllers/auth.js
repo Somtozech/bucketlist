@@ -55,8 +55,19 @@ class Auth {
       }
       const newUser = new UserModel({ email, password });
       await newUser.save();
+      let token = jwt.sign(
+        {
+          id: newUser.id,
+          email: newUser.email
+        },
+        JWT_KEY,
+        { expiresIn: '5h' }
+      );
+      await Tokens.create({ userId: newUser.id, token });
+
       res.status(200).json({
-        message: 'User was successfully created. Login'
+        message: 'Authentication was successful',
+        token
       });
     } catch (error) {
       next(error);

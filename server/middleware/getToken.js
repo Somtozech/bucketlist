@@ -11,7 +11,7 @@ function getToken(req) {
     token = req.body.token;
   }
 
-  return token;
+  return token ? token : null;
 }
 
 module.exports = getToken;

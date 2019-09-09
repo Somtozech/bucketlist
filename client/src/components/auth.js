@@ -12,7 +12,7 @@ export default function auth({ handleLogin }) {
             <Login handleFormSubmit={handleLogin}></Login>
           </div>
           <div label="Sign Up">
-            <Signup></Signup>
+            <Signup handleFormSubmit={handleLogin}></Signup>
           </div>
         </Tabs>
       </div>

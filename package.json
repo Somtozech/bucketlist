@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@hapi/joi": "^15.1.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "helmet": "^3.20.1",
     "http-errors": "^1.7.3",
     "jsonwebtoken": "^8.5.1",
